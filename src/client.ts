@@ -80,6 +80,8 @@ export class KeycloakClient implements KeycloakInstance {
 
   clientId?: string;
 
+  clientSecret?: string;
+
   redirectUri?: string;
 
   profile?: KeycloakProfile;
@@ -686,6 +688,7 @@ export class KeycloakClient implements KeycloakInstance {
       params.set('grant_type', 'authorization_code');
       params.set('client_id', this.clientId!);
       params.set('redirect_uri', oauth.redirectUri!);
+      params.set('client_secret', oauth.clientSecret || '');
 
       if (oauth.pkceCodeVerifier) {
         params.set('code_verifier', oauth.pkceCodeVerifier);
@@ -774,6 +777,7 @@ export class KeycloakClient implements KeycloakInstance {
         storedNonce: oauthState.nonce,
         prompt: oauthState.prompt,
         pkceCodeVerifier: oauthState.pkceCodeVerifier,
+        clientSecret: this.clientSecret,
       };
     }
 
@@ -959,6 +963,8 @@ export class KeycloakClient implements KeycloakInstance {
     }
 
     this.clientId = config.clientId;
+
+    this.clientSecret = config.clientSecret;
 
     const oidcProvider = config.oidcProvider;
     // When oidcProvider config is not supplied, use local configuration params

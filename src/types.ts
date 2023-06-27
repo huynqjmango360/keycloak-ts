@@ -15,6 +15,11 @@ export interface KeycloakConfig {
    * Client identifier, example: 'myapp'
    */
   clientId: string;
+
+  /**
+   *
+   */
+  clientSecret?: string;
   /**
    * OIDC-specific configuration parameters
    */
@@ -396,6 +401,8 @@ export interface OAuthResponse {
   refresh_token?: string;
 
   storedNonce?: string;
+
+  clientSecret?: string;
 }
 
 /**
